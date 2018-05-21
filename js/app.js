@@ -65,7 +65,7 @@ var ViewModel = function() {
 	this.locationsArray = ko.observableArray();
 	var markersList = [];
 	self.errorDisplay = ko.observable("");
-	self.pointList = ["Point1","Point2","Point3","Point4","Point5","Point6"];
+	self.pointList = ["Alfa","Beta","Beta2","Beta3","Gamma","Delta","Zeta","Yota"];
 
 
 	// dispaly window
@@ -174,7 +174,17 @@ var ViewModel = function() {
 // Filtering
 	//self.filterText = ko.observable("");
 	self.inputText = ko.observable("");
+		// FILTER 
+	// User input 
+	self.userInput = ko.observable("");
 
+	
+	self.searchResults = ko.computed(function() {
+    var q = self.userInput().toLowerCase();
+    return self.pointList.filter(function(i) {
+      return i.toLowerCase().indexOf(q) >= 0;
+    });
+		});
 
 
 

@@ -37,8 +37,8 @@
 <body> 
   <div class="row">
     <div class="col-sm-12">
-    <nav class="navbar navbar-expand-lg" style="background-color: #080808;">
-    <h2 style="color: white;">Neighbourhood Map</h2>
+    <nav class="navbar navbar-expand-lg" style="float:right; background-color: #080808;">
+    <h1 style="padding-top: 20px;padding-right: 30px;color: white;">Neighbourhood Map</h1>
     </nav>
   </div>
   </div>
@@ -46,13 +46,29 @@
      <div class="container-fluid">
         <div class="row" style="height:100%;">
             <div class="col-sm-2">
-                <h4 class="text-centre" style="color:white;">Locations</h4>
-
+                <h4 class="text-centre" style="text-align: center;color:white;">Restaurants</h4>
+                <br/>
                 <div class="form-group">                  
-                   <input class="form-control form-control-sm" placeholder="Search" data-bind="textInput: searchInput"/>
-                </div> 
-              
+                   <input class="form-control form-control-sm" placeholder="Search" data-bind="textInput: userInput"/>
+                </div>               
+                <br/>
 
+                <ul class="list-group" style="background-color: #080808;" data-bind="foreach: searchResults">
+                    <li class="list-group-item d-flex justify-content-between align-items-center" >
+                    <h4 data-bind="text: $data"></h4>
+                    </li>                 
+                </ul>
+            
+      <!--       		<ul data-bind="foreach: searchResults">
+  				<li data-bind="text: $data"></li>
+				</ul>
+
+				<h3>All items:</h3>
+				<ul data-bind="foreach: pointList">
+  				<li data-bind="text: $data"></li>
+				</ul>
+             -->
+            	<br/><br/>
                 <ul class="list-group" style="background-color: #080808;">
                     <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #080808;">
                     <h4>Location 1</h4>
@@ -73,6 +89,8 @@
                     <h4>Location 6</h4>
                     </li>
                 </ul>
+
+
             </div> <!-- left-column end -->
             
 
