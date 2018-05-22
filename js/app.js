@@ -6,7 +6,7 @@ var restaurants = [
 		address: "8 Warwick Lane Worthing West Sussex",
 		lat: 50.8121324,
 		lng: -0.3704634,
-		show: true,
+		show: true, ///remove from table ///////////////////////////////////////////////////////////
 		venueid: "4f36ccc3e4b0fb0dfc3c6814",
 		image: "https://igx.4sqi.net/img/general/300x300/33149580_lyaSikfahuuTXc3ak_RGhle6-rOlrjpxsTN8w1OD"
 	},
@@ -63,7 +63,9 @@ var ViewModel = function() {
 	var self = this;
 
 	this.locationsArray = ko.observableArray();
-	var markersList = [];
+	self.markersList = [];
+	self.mapList = []; // for testing
+
 	self.errorDisplay = ko.observable("");
 	self.pointList = ["Alfa","Beta","Beta2","Beta3","Gamma","Delta","Zeta","Yota"];
 
@@ -97,7 +99,8 @@ var ViewModel = function() {
         	label: labels[labelIndex++ % labels.length],
         	map: map,  // google.maps.Map 
         	title: marker.name,
-        	show: marker.show,
+        	visible: ko.observable(true), // problem with binding text: visible???
+        	selected: ko.observable(false), //problem with binding
         	venueid: marker.venueid,
         	animation: google.maps.Animation.DROP
     		});
@@ -105,13 +108,13 @@ var ViewModel = function() {
     	bounds.extend(marker.position);
     	map.fitBounds(bounds);
     	google.maps.event.addListener(marker, 'click', function() { 
- 		self.displayInfo(marker); 				
+ 		self.markerClickInfo(marker); 				
     	}); 
     	return marker;  
 	};
 
 	// function for dispalaing information in infoWindows
-	self.displayInfo = function(marker) {
+	self.markerClickInfo = function(marker) {
 		if (infowindow.marker != marker) {
 				infowindow.marker = marker;
 				var content = 'dgdgdg'
@@ -136,8 +139,13 @@ var ViewModel = function() {
 	
 	// populate markers List with markers
 	restaurants.forEach(function(restaurant){
-		markersList.push(self.addMarker(restaurant));
+		self.markersList.push(self.addMarker(restaurant));
 	});	
+
+	 // restaurants.forEach(function(restaurant){
+		// self.mapList.push(self.addMarker(restaurant));
+	 // });
+
 
 	//to add API information to each marker
 	self.addFourSqAPI = function(givenMapMarker) {
@@ -156,13 +164,6 @@ var ViewModel = function() {
 	            }
         });
    };
-
-	// var m1 = self.addMarker(restaurants[0]);
-	// var m2 = self.addMarker(restaurants[1]);
-	// var m3 = self.addMarker(restaurants[2]);
-	// var m4 = self.addMarker(restaurants[3]);
-	// var m5 = self.addMarker(restaurants[4]);
-	// var m6 = self.addMarker(restaurants[5]);
 
 	function drop() {
   		for (var i =0; i < markerArray.length; i++) {
