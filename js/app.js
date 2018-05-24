@@ -62,13 +62,18 @@ var restaurants = [
 var ViewModel = function() {
 	var self = this;
 
-	this.locationsArray = ko.observableArray();
+	this.locationsArray = ko.observableArray(); //not used
 	self.markersList = [];
+	self.userInput = ko.observable("");
+
 	self.mapList = []; // for testing
+	
+	self.clickCount = ko.observable(0); // for testing
+	self.testString = ko.observable("initial"); // for testing
 
 	self.errorDisplay = ko.observable("");
-	self.pointList = ["Alfa","Beta","Beta2","Beta3","Gamma","Delta","Zeta","Yota"];
-
+	self.pointList = [];
+	// self.pointList = ["Alfa","Beta","Beta2","Beta3","Gamma","Delta","Zeta","Yota"];
 
 	// dispaly window
 	var infoPanel = "";
@@ -172,21 +177,68 @@ var ViewModel = function() {
     		}, i * 200);
   	}};
 
-// Filtering
-	//self.filterText = ko.observable("");
-	self.inputText = ko.observable("");
-		// FILTER 
-	// User input 
-	self.userInput = ko.observable("");
+  	//select Marker - this gonna be important function
+  	self.selectMarker = function() {
+  		self.clickCount(self.clickCount() + 1);
+		self.testString("new value");
+		// self.removePerson = function() {
+  //       self.people.remove(this);
+  //   }
+
+  	};
+
+  	// testing function //// remove earlier
+	this.incrementCounter = function() {
+		self.clickCount(self.clickCount() + 1);
+		self.testString("new value")
+	};
+
+	// testing function passing a parameter //// remove earlier
+	this.test = function() {
+		self.clickCount(self.clickCount() + 1);
+		self.testString("new value")
+	};
+
+
 
 	
-	self.searchResults = ko.computed(function() {
-    var q = self.userInput().toLowerCase();
-    return self.pointList.filter(function(i) {
-      return i.toLowerCase().indexOf(q) >= 0;
-    });
-		});
 
+
+// 
+	// self.searchResults = ko.computed(function() {
+ //    var q = self.userInput().toLowerCase();
+ //    var length = self.markersList.length;
+	// 		for (i = 0; i < length; i++) { 
+	// 			//self.markersList[i].setVisible(true); works
+	// 			var name = self.markersList[i].title;
+	// 			//var name = self.markersList[i].selected;							
+	// 			self.pointList.push(name); 
+	// 		}
+ // 		 return self.pointList;
+ //    });
+
+
+// Filtering
+self.searchResults = ko.computed(function() {
+    var q = self.userInput().toLowerCase();
+    var activeList =  ko.utils.arrayFilter(self.markersList, function(marker) {
+        var result = marker.title.toLowerCase().indexOf(q) == 0;
+        return result;
+        //marker.selected(true);
+      });
+
+    return activeList
+    }); // end of searchResults function
+
+// turn marker visibility on
+self.markerVisibilityOn = function(marker) {
+  		marker.setVisible(true); 
+  	};
+
+// turn marker visibility off
+self.markerVisibilityOff = function(marker) {
+  		marker.setVisible(false); 
+  	};
 
 
 } // view model ends
