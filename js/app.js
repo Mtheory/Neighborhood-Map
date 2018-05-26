@@ -62,15 +62,12 @@ var restaurants = [
 var ViewModel = function() {
 	var self = this;
 
-	this.locationsArray = ko.observableArray(); //not used
 	self.markersList = [];
 	self.userInput = ko.observable("");
+	self.picture = ko.observable("https://igx.4sqi.net/img/general/300x300/3520194_k8GOU8D_a69pycgzKK73LP0eUIN9-2YmMqWaeGczBsg.jpg");
 
-	self.mapList = []; // for testing
+
 	
-	self.clickCount = ko.observable(0); // for testing
-	self.testString = ko.observable("initial"); // for testing
-
 	self.errorDisplay = ko.observable("");
 	self.pointList = [];
 	// self.pointList = ["Alfa","Beta","Beta2","Beta3","Gamma","Delta","Zeta","Yota"];
@@ -113,7 +110,7 @@ var ViewModel = function() {
     	bounds.extend(marker.position);
     	map.fitBounds(bounds);
     	google.maps.event.addListener(marker, 'click', function() { 
- 		self.markerClickInfo(marker); 				
+ 		self.selectMarker(marker); 				
     	}); 
     	return marker;  
 	};
@@ -156,7 +153,7 @@ var ViewModel = function() {
 	self.addFourSqAPI = function(givenMapMarker) {
      $.ajax({
 	            url: "https://api.foursquare.com/v2/venues/" + givenMapMarker.venueid +
-							 '?client_id=GE0SZ0HF35JPSWTLVAJDVTCLPSL2FFXRAEJOCHRAX05MU5OY&client_secret=1II0N22MXYQTFRPCJGBLWN2E4A1UMY4LXG1VREVHHMN5MSJE&v=20160606',
+							 '?client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606',
 	            dataType: "json",
 	            success: function (data) {
 	                var result = data.response.venue;
@@ -170,22 +167,8 @@ var ViewModel = function() {
         });
    };
 
-	function drop() {
-  		for (var i =0; i < markerArray.length; i++) {
-    	setTimeout(function() {
-      		addMarkerMethod();
-    		}, i * 200);
-  	}};
 
-  	//select Marker - this gonna be important function
-  	self.selectMarker = function() {
-  		self.clickCount(self.clickCount() + 1);
-		self.testString("new value");
-		// self.removePerson = function() {
-  //       self.people.remove(this);
-  //   }
-
-  	};
+  	
 
   	// testing function //// remove earlier
 	this.incrementCounter = function() {
@@ -200,10 +183,23 @@ var ViewModel = function() {
 	};
 
 
+	//select Marker - this gonna be important function
+  	self.selectMarker = function(marker) {
+  		ko.utils.arrayForEach(self.markersList, function(marker) {
+	    	marker.selected(false);
+	    	marker.setAnimation(null);
+	    });
 
+  		self.markerClickInfo(marker);
+  		marker.selected(true);
+  		marker.setAnimation(google.maps.Animation.BOUNCE);
+
+				// marker.setAnimation(google.maps.Animation.BOUNCE);
+				// marker.setAnimation(null);
+  	};
 	
 
-
+  	// imgSrc: 'test_image.jpg'  picture
 // 
 	// self.searchResults = ko.computed(function() {
  //    var q = self.userInput().toLowerCase();
@@ -218,27 +214,28 @@ var ViewModel = function() {
  //    });
 
 
-// Filtering
-self.searchResults = ko.computed(function() {
-    var q = self.userInput().toLowerCase();
-    var activeList =  ko.utils.arrayFilter(self.markersList, function(marker) {
-        var result = marker.title.toLowerCase().indexOf(q) == 0;
-        return result;
-        //marker.selected(true);
-      });
+	// Filtering
+	self.searchResults = ko.computed(function() {
+    	var q = self.userInput().toLowerCase();
+    
+    	// Restaurants list filtered by user input
+    	var activeList =  ko.utils.arrayFilter(self.markersList, function(marker) {
+        	var result = marker.title.toLowerCase().indexOf(q) == 0;
+      		  return result;
+      	});
 
-    return activeList
-    }); // end of searchResults function
+    	ko.utils.arrayForEach(self.markersList, function(marker) {
+	    	marker.setVisible(false);
+	    });
+    	//only markers listed are visible
+    	ko.utils.arrayForEach(activeList, function(marker) {
+    		marker.setVisible(true);
+    	});
 
-// turn marker visibility on
-self.markerVisibilityOn = function(marker) {
-  		marker.setVisible(true); 
-  	};
+    return activeList;    
+    }); 
 
-// turn marker visibility off
-self.markerVisibilityOff = function(marker) {
-  		marker.setVisible(false); 
-  	};
+
 
 
 } // view model ends

@@ -33,7 +33,7 @@
   background-color: #080808;
 }
 .selectedTag{
-  color: yellow;
+  background-color: grey;
 }
     </style>
 </head>
@@ -50,20 +50,27 @@
         <div class="row" style="height:100%;">
             <div class="col-sm-2">
               <br/>
-                <h4 class="text-centre" style="text-align: center;color:white;">Restaurants</h4>
+                <h3 class="text-centre" style="text-align: center;color:white;">Restaurants</h3>
                 <br/>
                 <div class="form-group">                  
                    <input class="form-control form-control-sm" placeholder="Search" data-bind="textInput: userInput" />
-                </div> 
-
-                 <ul class="list-group" style="background-color: #080808;" data-bind="foreach: markersList">
-                    <li class="list-group-item d-flex justify-content-between align-items-center" data-bind="click: $parent.selectMarker">
-                    <a href="#" ><h5 data-bind="css: {selectedTag: selected}, text: title, click: $parent.selectMarker"></h5></a>
+                </div> <!-- <span class="badge">12</span> -->
+                <br/>
+                <!--  ok that is working -->
+                <ul class="list-group" style="background-color: #080808;" data-bind="foreach: searchResults">
+                    <li class="list-group-item d-flex justify-content-between align-items-center" data-bind="css: {selectedTag: selected}, click: $parent.selectMarker">
+                    <h4 style="color: white;" data-bind="css: {selectedTag: selected}, text: title, click: $parent.selectMarker"></h4><!-- <h4 data-bind="text: title"></h4> -->
                     </li>                 
                 </ul>
+
+                <!--  <ul class="list-group" style="background-color: #080808;" data-bind="foreach: markersList">
+                    <li class="list-group-item d-flex justify-content-between align-items-center" data-bind="css: {selectedTag: selected}, click: $parent.selectMarker">
+                    <a href="#" ><h5 data-bind="css: {selectedTag: selected}, text: title, click: $parent.selectMarker"></h5></a>
+                    </li>                 
+                </ul> -->
                 
                 <br/>
-                <div>
+<!--                 <div>
                   <div>
                       <h3> search input: <div data-bind="text: userInput"></div> </h3>
                       <br/>  test variable :                     
@@ -73,15 +80,15 @@
                     You've clicked <span data-bind="text: clickCount"></span> times
                   <button data-bind="click: incrementCounter">Click me</button>
                     <!-- data-bind="click: incrementCounter, attr: {src: imgSrc}" -->
-                </div>
+                <!-- </div>
+ --> 
 
 
-               <!--  ok that is working -->
-                <ul class="list-group" style="background-color: #080808;" data-bind="foreach: searchResults">
-                    <li class="list-group-item d-flex justify-content-between align-items-center" >
-                    <h4 data-bind="text: title"></h4><!-- <h4 data-bind="text: title"></h4> -->
-                    </li>                 
-                </ul>
+                <br/>
+                <br/>
+              <div> <!-- picture container   -->
+                <img class="img-responsive" data-bind="attr: {src: picture}" width="auto" height="auto"> 
+              </div>
             
 
 
