@@ -1,46 +1,44 @@
-
-
 var pointsOfInterest = [
 	{
 		name: "Giuseppes",
 		address: "8 Warwick Lane Worthing West Sussex",
-		lat: 50.8121324,
-		lng: -0.3704634,
+		lat: 50.8120774,
+		lng: -0.3682963,
 		venueid: "4f36ccc3e4b0fb0dfc3c6814"
 	},
 	{
 		name: "Spice Thai kitchen",
 		address: "36 South Farm Rd Worthing West Sussex",
-		lat: 50.8194879,
-		lng: -0.3808021,
+		lat: 50.8194778,
+		lng: -0.3786658,
 		venueid: "538a2b46498e3f763f51a3a3"
 	},
 	{
 		name: "Imperial China",
 		address: "Wordsworth Road Worthing West Sussex",
-		lat: 50.808418,
-		lng: -0.3844727,
+		lat: 50.808564,
+		lng: -0.382426,
 		venueid: "4ccf1b9272106dcb6240ad99"
 	},
 	{
 		name: "DD's Jerk 'n' Ting",
 		address: "2 Colonnade House Worthing West Sussex",
-		lat: 50.8121378,
-		lng: -0.3687045,
+		lat: 50.811923,
+		lng: -0.367403,
 		venueid: "56a3d2ad498ef6417f9fe556"
 	},
 	{
 		name: "The Three Fishes",
 		address: "56 Chapel Rd. Worthing West Sussex",
-		lat: 50.8133019,
-		lng: -0.3728837,
+		lat: 50.8133028,
+		lng: -0.3707193,
 		venueid: "4c87ac68821e9eb029ce8d89"
 	},
 	{
 		name: "Om Taste of Nepal",
 		address: "67 Rowlands Rd. Worthing West Sussex",
-		lat: 50.8099836,
-		lng: -0.3818448,
+		lat: 50.80999,
+		lng: -0.381627,
 		venueid: "502fe900e4b0648637e30f18"
 	},
 	{
@@ -53,8 +51,8 @@ var pointsOfInterest = [
 	{
 		name: "Subway",
 		address: "no address",
-		lat: 50.8098894,
-		lng: -0.3723519,
+		lat: 50.8116955,
+		lng: -0.3700714,
 		venueid: "4baa0dd4f964a520f4463ae3"
 	},
 	{
@@ -69,19 +67,11 @@ var pointsOfInterest = [
 //VIEW MODEL
 var ViewModel = function() {
 	var self = this;
-
 	self.markersList = [];
-	self.userInput = ko.observable("");	
-
-	self.errorFourSquareAPI = ko.observable("");
-	self.errorDisplay = ko.observable("");
+	self.userInput = ko.observable("");	;
 	
-
 	// info dispaly window
-	var infoPanel = "";
-	self.infowindow = new google.maps.InfoWindow({
-            content: infoPanel
-            });
+	self.infowindow = new google.maps.InfoWindow();
 
 	//labels for markers
 	var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -98,8 +88,6 @@ var ViewModel = function() {
   	// craeate instance of bounds variable to control view
 	var bounds = new google.maps.LatLngBounds();
 
-
-
 	// Add marker function
 	self.addMarker	= function(marker) {
     	var marker = new google.maps.Marker({       
@@ -109,11 +97,10 @@ var ViewModel = function() {
         	address: marker.address,
         	map: map,  // google.maps.Map 
         	title: marker.name,
-        	visible: ko.observable(true), // problem with binding text: visible???
-        	selected: ko.observable(false), //problem with binding
+        	visible: ko.observable(true), 
+        	selected: ko.observable(false), 
         	venueid: marker.venueid,
-        	animation: google.maps.Animation.DROP,
-        	image: marker.image
+        	animation: google.maps.Animation.DROP
     		});
     		//extending bounds for every marker
     	bounds.extend(marker.position);
@@ -124,31 +111,43 @@ var ViewModel = function() {
     	return marker;  
 	};
 
-	// function for dispalaing information in infoWindows
+	// display information on the marker
 	self.markerClickInfo = function(marker) {
-		if (infowindow.marker != marker) {
-			infowindow.marker = marker;
-			//Style the ouput
-           	var contentString = '<div class="infoWin" style="color: black;">' +
-               '<h3 style="text-align: center">' + marker.title + '</h3>' +
-               '<p>Address: ' +marker.address+ '</p>' +
-               '<p> Likes: ' + marker.likes+  ' </p>' +
-               '<img class="smImg" src="'+marker.image+'" width="100" height="100">' +                
-               '<p><a href="' + marker.venueURL + '" target="_blank" style="float:right;color: #9933FF;">' + 'Link to WebPage' + '</a></p>' +
-               '</div>';
-			infowindow.setContent(contentString);
-			infowindow.open(map, marker);
-			//pan to marker position
-			map.panTo(marker.getPosition());
-		};
+		infowindow.marker = marker;
+		if (marker.fourSquareError!= null){
+			//Style the output
+			var contentString = '<div class="infoWin" style="color: black;">' +
+        	'<h3 style="text-align: center">' + marker.title + '</h3>' +
+            '<p>Error:  ' +marker.fourSquareError+ '</p>' +
+            '</div>';
+		} else {
+		//Style the output
+        var contentString = '<div class="infoWin" style="color: black;">' +
+        	'<h3 style="text-align: center">' + marker.title + '</h3>' +
+            '<p>Address: ' +marker.address+ '</p>' +
+            '<p> Likes: ' + marker.likes+  ' </p>' +
+            '<img class="smImg" src="'+marker.image+'" width="100" height="100"' +
+            ' style="background-image: url(img/noimage.jpg);">' +                
+            '<p><a href="' + marker.venueURL + '" target="_blank" style="float:right;color: #9933FF;">' + 'Link to WebPage' + '</a></p>' +
+            '</div>';
+        }
+
+        infowindow.setContent(contentString);
+		infowindow.open(map, marker);
+	 	//pan to marker position
+		map.panTo(marker.getPosition());
+		//closing the infoWindow 
+		google.maps.event.addListener(infowindow, 'closeclick', function() { 
+ 				infowindow.close(); 
+ 				marker.setAnimation(null);
+    	});
 	};
 
 	// add information from FourSquare API
 	self.fourSquareAPIData =  function (marker){	
 		$.ajax({
 			url: "https://api.foursquare.com/v2/venues/" + marker.venueid +
-							 '?client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606',
-		 	//url: "https://api.foursquare.com/v2/venues/502fe900e4b0648637e30f18?ll=40.7,-74&client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606",	            
+							 '?client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606',		 	
 	        dataType: "json",
 	        success: function(data){
 	           	var result = data.response.venue;
@@ -157,7 +156,7 @@ var ViewModel = function() {
 	                marker.image = self.photoUrlAssemble(result.bestPhoto.prefix, result.bestPhoto.suffix);		          			                      	         	    
         	},
 	        error: function (err) {
-	           	self.errorFourSquareAPI("No data received from FourSquare");
+	           	marker.fourSquareError = ("No data received from FourSquare");
 	        }
         });
 	};
@@ -220,7 +219,6 @@ var ViewModel = function() {
 		};
 		return url ;
   	};
-
 
 } // view model end
 

@@ -1,1 +1,54 @@
+ html,body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #080808;
+}
+#map {
+    height: 100%;
+}
 
+.container-fluid {
+    border: 1px solid #000;
+    overflow-y:auto;
+    height:100%;
+}​
+
+.list-group-item {
+  background-color: #080808;
+}
+
+.ul {
+  background-color: #080808;
+}
+
+.listing{
+  color: #B0C4DE;
+  font-size: 1vw;
+}
+
+.badge {
+  float:right;
+  font-size: 0.9vw;
+  color: #E0FFFF;
+}
+
+.nav-style {
+  float:right;
+  background-color: #080808;
+}
+
+.title-format {
+  padding-top: 20px;
+  padding-right: 30px;
+  font-size: 1.8vw;
+  color: #B0C4DE;
+} 
+
+.text-centre {
+  text-align: center;
+  font-size: 1.4vw;
+  color:#B0C4DE;
+}
