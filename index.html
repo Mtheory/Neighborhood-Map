@@ -9,35 +9,51 @@
      <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+		@media screen and (max-height: 600px) {
+			.title {
+  font-size: 160%;
+  color: #B0C4DE;
+  margin: auto;
+  display: inline;
+  margin-right: 7.5%;
+}
+
+.icon {
+  font-size: 160%;
+  margin-left: 2.8%;
+} 
+	} 
+	</style>
 </head>
 
 <body> 
-  <div class="row">
-    <div class="col-sm-12">
-      <nav class="navbar navbar-expand-lg nav-style">
-        <h1 class= "title-format">Neighbourhood Map</h1>
-      </nav>
-    </div>
-  </div>
-
-  <div class="container-fluid">
-    <div class="row" style="height:100%;">
-      <div class="col-sm-2">
-        <br/>
-        <h2 class="text-centre">Restaurants</h2>
+	<div id="mySidenav" class="sidenav">
+  		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+ 		<br/>
+       	<h2 class="text-centre">Restaurants</h2>
         <br/>
         <div class="form-group">                  
-          <input class="form-control form-control-sm" placeholder="Search" style="font-size: 1vw;" data-bind="textInput: userInput" />
+        	<input class="form-control form-control-sm" placeholder="Search" style="font-size: 150%;" data-bind="textInput: userInput" />
         </div> 
         <br/>
         <ul class="list-group" data-bind="foreach: searchResults">
           <li class="list-group-item d-flex justify-content-between align-items-center" data-bind="css: {active: selected}, click: $parent.selectMarker">
-          <h4 class = "listing" data-bind="css: {active: selected}, text: title, click: $parent.selectMarker"></h4><span class="badge" data-bind="text: label"></span>
+          	<h4 class = "listing" data-bind="css: {active: selected}, text: title, click: $parent.selectMarker"></h4><span class="badge" data-bind="text: label"></span>
           </li>                 
         </ul>       
-      </div> <!-- left-column end -->
+	</div>
+
+  <div class="row " style="height: 8%;">
+      <nav class="navbar navbar-expand-lg nav-style" >
+       <span class="glyphicon glyphicon-menu-hamburger icon" onclick="openNav()"></span><h1 class= "title" ">Neighbourhood Map</h1>
+      </nav>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row" style="height:100%;">
             
-      <div class="col-sm-10">
+      <div class="col-sm-12">
         <div id="map"></div>
         <p id="map-error"></p>
       </div>
@@ -56,6 +72,19 @@
   function mapError() {
     document.getElementById('map-error').append = "Error in Map!"
   }
+
+  /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+} 
+
 </script>
 
 
