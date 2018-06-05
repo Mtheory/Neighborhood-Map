@@ -17,3 +17,5 @@ Technical Specifications
 Installation/Running
 download/clone this project https://github.com/Mtheory/Neighborhood-Map.git
 run index.html
+
+Current version of the application is published at: https://mtheory.github.io/Neighborhood-Map/

@@ -4,97 +4,59 @@
     <title>Neighbourhood Map</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/app.js"></script>
+    <script src="js/data.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-slate.css">
-     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap-slate.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-		@media screen and (max-height: 600px) {
-			.title {
-  font-size: 160%;
-  color: #B0C4DE;
-  margin: auto;
-  display: inline;
-  margin-right: 7.5%;
-}
-
-.icon {
-  font-size: 160%;
-  margin-left: 2.8%;
-} 
-	} 
-	</style>
 </head>
 
 <body> 
+	<!-- Off canvas List  -->
 	<div id="mySidenav" class="sidenav">
   		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
  		<br/>
        	<h2 class="text-centre">Restaurants</h2>
         <br/>
         <div class="form-group">                  
-        	<input class="form-control form-control-sm" placeholder="Search" style="font-size: 150%;" data-bind="textInput: userInput" />
+        	<input class="form-control form-control-sm input-s" placeholder="Search" data-bind="textInput: userInput" />
         </div> 
         <br/>
         <ul class="list-group" data-bind="foreach: searchResults">
           <li class="list-group-item d-flex justify-content-between align-items-center" data-bind="css: {active: selected}, click: $parent.selectMarker">
-          	<h4 class = "listing" data-bind="css: {active: selected}, text: title, click: $parent.selectMarker"></h4><span class="badge" data-bind="text: label"></span>
+          	<h4 class = "listing" data-bind="css: {active: selected}, text: title, click: $parent.selectMarker"></h4>
+          	<span class="badge" data-bind="text: label"></span>
           </li>                 
         </ul>       
 	</div>
 
-  <div class="row " style="height: 8%;">
-      <nav class="navbar navbar-expand-lg nav-style" >
-       <span class="glyphicon glyphicon-menu-hamburger icon" onclick="openNav()"></span><h1 class= "title" ">Neighbourhood Map</h1>
-      </nav>
-  </div>
+	<!-- page content -->
+	<div class="content">
+  		<!-- Nav section -->
+  		<div class="row ">
+      		<nav class="navbar navbar-expand-lg nav-style">
+       		<span class="glyphicon glyphicon-menu-hamburger icon" onclick="openNav()"></span>
+       		<h1 class= "title">Neighbourhood Map</h1>
+      		</nav>
+  		</div> 
 
-  <div class="container-fluid">
-    <div class="row" style="height:100%;">
-            
-      <div class="col-sm-12">
-        <div id="map"></div>
-        <p id="map-error"></p>
-      </div>
-
-    </div> 
-  </div>  <!-- fluid container end-->
-
-
-<script type="text/javascript">   
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'));
-    infowindow = new google.maps.InfoWindow();
-    //To Activate Knockout through app.js
-    ko.applyBindings(new ViewModel());
-  }
-  function mapError() {
-    document.getElementById('map-error').append = "Error in Map!"
-  }
-
-  /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-} 
-
-</script>
-
+  		<!-- Map section -->
+    	<div class="row map-container">          
+      		<div class="col-sm-12">
+        		<div id="map" class="map"></div>
+        		<p id="map-error"></p>
+      		</div>
+    	</div> 
+  	</div>  <!-- page content end -->
 
 
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGuRlAN_uXEwRRa7jUbT_PmBxkZGyfFrI&v=3&callback=initMap" 
-  onerror="mapError()">
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGuRlAN_uXEwRRa7jUbT_PmBxkZGyfFrI&v=3&callback=initMap" onerror="mapError()">
 </script>
 <script src="js/lib/knockout-3.2.0.js"></script>
-<script src="js/app.js"></script>
 
 </body>
+
 </html>

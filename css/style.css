@@ -1,96 +1,125 @@
- html,body {
-    font-family: Arial, sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: #080808;
-}
-#map {
-    height: 100%;
+ html,
+ body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: #080808;
 }
 
-.container-fluid {
-    overflow-y:auto;
-    height:100%;
-}​
-
-.list-group-item {
-  background-color: #080808;
+.content {
+	height: 100vh;
 }
 
-.ul {
-  background-color: #080808;
+.map-container {
+	height: 100%;
 }
 
-.listing{
-  color: #B0C4DE;
-  font-size: 165%;
+.map {
+	height: 100%;
 }
 
-.badge {
-  float:right;
-  font-size: 110%;
-  color: #E0FFFF;
-}
-
-.text-centre {
-  text-align: center;
-  font-size: 200%;
-  color:#B0C4DE;
-}
-
+/*navigation elements*/
 .nav-style {
-  background-color: #080808;
-  height: 50%;
-  width: 100%;
+	background-color: #080808;
+	height: 50%;
+	width: 100%;
+	margin-bottom: 0px;
 }
 
 .title {
-  font-size: 250%;
-  color: #B0C4DE;
-  margin: auto;
-  display: inline;
-  margin-right: 2.5%;
+	font-size: 250%;
+	color: #B0C4DE;
+	margin: auto;
+	display: inline;
+	margin-right: 2.5%;
 }
 
 .icon {
-  font-size: 250%;
-  margin-left: 1.8%;
-} 
+	font-size: 250%;
+	margin-left: 1.8%;
+}
 
- /* The side navigation menu */
+/*side menu styles*/
+.list-group-item {
+	background-color: #080808;
+}
+
+.ul {
+	background-color: #080808;
+}
+
+.listing {
+	color: #B0C4DE;
+	font-size: 165%;
+}
+
+.badge {
+	float:right;
+	font-size: 110%;
+	color: #E0FFFF;
+}
+
+.text-centre {
+	text-align: center;
+	font-size: 200%;
+	color:#B0C4DE;
+}
+
+.input-s {
+	font-size: 150%;
+	margin-left: 5%;
+	width: 90%;
+}
+
+/* off- canvas elements of side menu*/
 .sidenav {
-    height: 100%; 
-    width: 0; 
-    position: fixed; 
-    z-index: 1; 
-    top: 0;
-    left: 0;
-    background-color: #080808; 
-    overflow-x: hidden; 
-    padding-top: 60px; 
-    transition: 0.5s; 
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #080808;
+	overflow-x: hidden;
+	padding-top: 60px;
+	transition: 0.5s;
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+	color: #f1f1f1;
 }
 
-/* Position and style the close button */
 .sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 1%;
-    font-size: 350%;
-    margin-left: 50px;
+	position: absolute;
+	top: 0;
+	right: 1%;
+	font-size: 350%;
+	margin-left: 50px;
+}
+
+/*media querry*/
+@media screen and (max-height: 600px) {
+	.title {
+		font-size: 160%;
+		color: #B0C4DE;
+		margin: auto;
+		display: inline;
+		margin-right: 6.5%;
+	}
+
+	.icon {
+		font-size: 160%;
+		margin-left: 3.5%;
+	}
+
 }
