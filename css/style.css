@@ -19,6 +19,12 @@
 	height: 100%;
 }
 
+.map-error {
+	margin: auto; 
+	width: 100%;
+	text-align: center;
+}
+
 /*navigation elements*/
 .nav-style {
 	background-color: #080808;

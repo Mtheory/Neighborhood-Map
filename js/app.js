@@ -1,4 +1,8 @@
-'use strict'
+'use strict';
+/*jshint globalstrict: true*/
+/*global google,ko,$,pointsOfInterest*/
+
+var map;
 
 //Asynchronously load google maps' API.
 function initMap() {
@@ -16,6 +20,7 @@ function initMap() {
 // google map error handler
 function mapError() {
     document.getElementById('map-error').innerHTML =
+        "<br/><br/><br/>" +
         "Oops! Google maps could not be loaded, please try again later.";
 }
 
@@ -51,7 +56,7 @@ var ViewModel = function() {
 
     // Add marker function
     self.addMarker = function(marker) {
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             position: {
                 lat: marker.lat,
                 lng: marker.lng
@@ -126,12 +131,15 @@ var ViewModel = function() {
 
     // add information from FourSquare API
     self.fourSquareAPIData = function(marker) {
-        $.ajax({
+        var ajaxRequest = $.ajax({
             url: "https://api.foursquare.com/v2/venues/" + marker.venueid +
-                '?client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606',
-            dataType: "json",
-            success: function(data) {
-                var result = data.response.venue;
+            '?client_id=ZC5Y1APXRBDGJVASQAYT0LDPTGPVTTZASC25MENSDEGOKARF&client_secret=1DDEVOKPJIWHMSVBRMX55PW2POSDUDXUWLOGOSKZGWZTVVJC&v=20160606',
+            dataType: "json"
+        });
+
+        //success
+        ajaxRequest.done(function(data) {
+            var result = data.response.venue;
                 marker.likes =
                         self.fourSquareResponseCheck(
                            result.likes.summary,"0 Likes");
@@ -140,12 +148,13 @@ var ViewModel = function() {
                            result.canonicalUrl,null);
                 marker.image =
                         self.fourSquarePictureResponseCheck(
-                           result.bestPhoto,"img/no_image_default.jpg");
-                marker.fourSquareError = null;
-            },
-            error: function(err) {
-                marker.fourSquareError = ("No additional information from FourSquare");
-            }
+                           result.bestPhoto,"img/noimage.jpg");
+                marker.fourSquareError = null;    
+        });
+
+        // error
+        ajaxRequest.fail(function(err) {
+            marker.fourSquareError = ("No additional information from FourSquare");
         });
     };
 
